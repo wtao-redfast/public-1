@@ -1,0 +1,13 @@
+# For prometheus use only
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mweather-svcmon
+spec:
+  jobLabel: mweather-job
+  selector:
+    matchLabels:
+      app: miniweather
+  endpoints:
+    - interval: 15s
+      port: api

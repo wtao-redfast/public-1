@@ -1,0 +1,24 @@
+# permissions for end users to edit apipubs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: apipub-editor-role
+rules:
+- apiGroups:
+  - publish.example.com
+  resources:
+  - apipubs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - publish.example.com
+  resources:
+  - apipubs/status
+  verbs:
+  - get

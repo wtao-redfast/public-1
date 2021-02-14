@@ -1,0 +1,13 @@
+# For prometheus use only
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pingpong-svcmon
+spec:
+  jobLabel: pingpong-job
+  selector:
+    matchLabels:
+      app: pingpong
+  endpoints:
+    - interval: 15s
+      port: api

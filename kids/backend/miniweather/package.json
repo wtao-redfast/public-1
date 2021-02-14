@@ -1,0 +1,21 @@
+{
+  "name": "miniweather",
+  "version": "1.0.0",
+  "description": "mini weather microservice",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node --experimental-modules app.mjs",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@scout_apm/scout-apm": "^0.1.9",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
+  }
+}

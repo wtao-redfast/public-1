@@ -1,0 +1,7 @@
+apiVersion: publish.example.com/v1
+kind: ApiPub
+metadata:
+  name: apipub-sample
+spec:
+  # Add fields here
+  appVersion: "1.0"

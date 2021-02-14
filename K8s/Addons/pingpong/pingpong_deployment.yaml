@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong-pod
+  template:
+    metadata:
+      labels:
+        app: pingpong-pod
+    spec:
+      containers:
+      - name: pingpong
+        image: taowenwei/pingpong:latest
+        ports:
+        - containerPort: 3000

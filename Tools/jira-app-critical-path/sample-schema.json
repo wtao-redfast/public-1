@@ -1,0 +1,16 @@
+{
+    "useInputToDisplayCriticalPath": {
+        "labels": ["productNames"],
+        "scrums": ["scrumTeams"]
+    },
+    "useTicketsToDefineExecutionPath": {
+        "level0": "epics",
+        "level1": ["stories", "bugs"],
+        "level2": "sub-tasks"
+    },
+    "useBlockedByToDefineBlockage": {
+        "storyNo": "id",
+        "blockedBy": "id"
+    },
+    "useLabelsToDefineProduct": ["productLabels"]
+}

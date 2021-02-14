@@ -1,0 +1,19 @@
+{
+  "name": "miniweather",
+  "version": "1.0.8",
+  "description": "mini weather microservice",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node --experimental-modules app.mjs"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-prometheus-middleware": "^1.0.0",
+    "fluent-logger": "^3.4.1",
+    "ip": "^1.1.5",
+    "jaeger-client": "^3.18.1",
+    "moment": "^2.29.1",
+    "os": "^0.1.1",
+    "prom-client": "^12.0.0"
+  }
+}

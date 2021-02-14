@@ -1,0 +1,19 @@
+{
+  "name": "pingpong",
+  "version": "1.0.8",
+  "description": "mini pingpong microservice",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-prometheus-middleware": "^1.0.0",
+    "ip": "^1.1.5",
+    "jaeger-client": "^3.18.1",
+    "moment": "^2.29.1",
+    "os": "^0.1.1",
+    "prom-client": "^12.0.0"
+  }
+}

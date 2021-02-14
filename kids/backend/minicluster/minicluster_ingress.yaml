@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: mweather-ingress
+  annotations:
+    # remove the /weather/ path component before passing to the service
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # disable http 308 Permenant Redirect from http to https
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      # define path components
+      - path: /weather(/|$)(.*)
+        backend:
+          serviceName: mweather-svc
+          servicePort: 80

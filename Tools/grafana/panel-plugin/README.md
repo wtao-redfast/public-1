@@ -1,3 +1,13 @@
+# Build the plugin
+https://grafana.com/tutorials/build-a-panel-plugin-with-d3/
+
+```bash
+yarn install
+yarn dev
+```
+
+The build can be found at `dist` folder 
+
 # Override the plugin path in command line
 
 ```bash

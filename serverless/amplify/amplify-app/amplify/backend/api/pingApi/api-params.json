@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/ping",
+            "lambdaFunction": "pingPong",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/ping"
+        }
+    ],
+    "resourceName": "pingApi",
+    "apiName": "pingApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "pingPong"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-amplifyapp-dev-105126-authRole",
+        "unAuthRoleName": "amplify-amplifyapp-dev-105126-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "pingPong",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

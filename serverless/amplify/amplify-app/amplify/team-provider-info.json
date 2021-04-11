@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyapp-dev-105126-authRole",
+      "UnauthRoleArn": "arn:aws:iam::382744374379:role/amplify-amplifyapp-dev-105126-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::382744374379:role/amplify-amplifyapp-dev-105126-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-amplifyapp-dev-105126-deployment",
+      "UnauthRoleName": "amplify-amplifyapp-dev-105126-unauthRole",
+      "StackName": "amplify-amplifyapp-dev-105126",
+      "StackId": "arn:aws:cloudformation:us-west-2:382744374379:stack/amplify-amplifyapp-dev-105126/61287180-9a25-11eb-a772-0633937de7fd",
+      "AmplifyAppId": "d3dptwxnxb3nmi"
+    },
+    "categories": {
+      "function": {
+        "pingPong": {
+          "deploymentBucketName": "amplify-amplifyapp-dev-105126-deployment",
+          "s3Key": "amplify-builds/pingPong-6c4a492f396978544835-build.zip"
+        }
+      }
+    }
+  }
+}

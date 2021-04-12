@@ -6,12 +6,10 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-
-var express = require('express')
-var bodyParser = require('body-parser')
-var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+import postnode from './node.js';
+import express from 'express';
+import bodyParser from 'body-parser';
+import * as awsServerlessExpressMiddleware from 'aws-serverless-express/middleware.js';
 
 // declare a new express app
 var app = express()
@@ -31,6 +29,11 @@ app.get('/ping', function(req, res) {
   res.json({success: 'pong', url: req.url});
 });
 
+app.post('/node', async function(req, res) {
+  await postnode(req.body.name, req.body.description);
+  res.json({success: 'pong', url: req.url});
+});
+
 app.listen(3000, function() {
     console.log("App started")
 });
@@ -38,4 +41,4 @@ app.listen(3000, function() {
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
+export default app;

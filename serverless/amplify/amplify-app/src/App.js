@@ -3,6 +3,8 @@ import './App.css';
 import * as React from 'react'; 
 import { API } from 'aws-amplify';
 import { listNodes } from './graphql/queries';
+import { createNode as CreateNode } from './graphql/mutations';
+import { v4 as uuid } from 'uuid';
 
 function App() {
   React.useEffect(() => {
@@ -17,6 +19,19 @@ function App() {
     })();
   }, []);
 
+  const onCreateNode = async () => {
+    debugger;
+
+    await API.graphql({
+      query: CreateNode,
+      variables: { input: {
+        id: uuid(),
+        name: "ghi",
+        description: "hola world"
+      } }
+    });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -24,14 +39,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={onCreateNode}>Create a new note</button>
       </header>
     </div>
   );

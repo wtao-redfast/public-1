@@ -15,3 +15,13 @@ express.js server as Lambda function to
 + apiTodoListGrpah to connect GraphQL + DynmoDB
 
 3. AWS secret is saved and auto managed by the `aws-export.js` file; it is not pushed in github
+
+## AWS services used
+1. AWS Amplify - as the top level umbrella service
+2. API Gateway + Lambda - for RESTful interface
+3. AWS AppSync - for GraphQL interface
+4. DynamoDB - NoSQL provider
+5. CloudWatch - service observability
+6. TODO - AWS S3
+7. TODO - AWS Cognito for authn and authz
+8. TODO - API Analytics

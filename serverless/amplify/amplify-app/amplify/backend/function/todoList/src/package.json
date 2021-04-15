@@ -1,6 +1,5 @@
 {
-  "name": "pingPong",
-  "type": "module",
+  "name": "todoList",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

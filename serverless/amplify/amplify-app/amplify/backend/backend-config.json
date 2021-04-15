@@ -1,19 +1,19 @@
 {
   "function": {
-    "pingPong": {
+    "todoList": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "api": {
-    "pingApi": {
+    "apiTodoList": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "pingPong",
+          "resourceName": "todoList",
           "attributes": [
             "Name",
             "Arn"
@@ -21,7 +21,7 @@
         }
       ]
     },
-    "notesApi": {
+    "apiTodoListGraph": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -30,7 +30,7 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "description": "public"
+              "description": "graphQL todo list"
             }
           },
           "additionalAuthenticationProviders": []

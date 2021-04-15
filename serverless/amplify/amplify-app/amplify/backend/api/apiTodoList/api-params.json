@@ -1,31 +1,31 @@
 {
     "paths": [
         {
-            "name": "/ping",
-            "lambdaFunction": "pingPong",
+            "name": "/todo",
+            "lambdaFunction": "todoList",
             "privacy": {
                 "open": true
             },
-            "policyResourceName": "/ping"
+            "policyResourceName": "/todo"
         }
     ],
-    "resourceName": "pingApi",
-    "apiName": "pingApi",
+    "resourceName": "apiTodoList",
+    "apiName": "apiTodoList",
     "functionArns": [
         {
-            "lambdaFunction": "pingPong"
+            "lambdaFunction": "todoList"
         }
     ],
     "privacy": {
         "auth": 0,
         "unauth": 0,
-        "authRoleName": "amplify-amplifyapp-dev-105126-authRole",
-        "unAuthRoleName": "amplify-amplifyapp-dev-105126-unauthRole"
+        "authRoleName": "amplify-amplifyapp-dev-95833-authRole",
+        "unAuthRoleName": "amplify-amplifyapp-dev-95833-unauthRole"
     },
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "pingPong",
+            "resourceName": "todoList",
             "attributes": [
                 "Name",
                 "Arn"

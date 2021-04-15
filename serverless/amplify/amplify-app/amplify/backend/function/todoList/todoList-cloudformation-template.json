@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "pingPong",
+            "todoList",
             {
               "Fn::Join": [
                 "",
                 [
-                  "pingPong",
+                  "todoList",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "amplifyappLambdaRole136a49bd",
+            "amplifyappLambdaRolebf5afc4c",
             {
               "Fn::Join": [
                 "",
                 [
-                  "amplifyappLambdaRole136a49bd",
+                  "amplifyappLambdaRolebf5afc4c",
                   "-",
                   {
                     "Ref": "env"

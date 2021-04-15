@@ -14,15 +14,15 @@
         },
     
     
-          "functionpingPongName": {
+          "functiontodoListName": {
             "Type": "String",
-            "Default": "functionpingPongName"
+            "Default": "functiontodoListName"
           },
         
           
-          "functionpingPongArn": {
+          "functiontodoListArn": {
             "Type": "String",
-            "Default": "functionpingPongArn"
+            "Default": "functiontodoListArn"
           }
         
           
@@ -45,16 +45,16 @@
         
         
         
-      "pingApi": {
+      "apiTodoList": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "pingApi",
+          "Name": "apiTodoList",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "pingApi"
+              "title": "apiTodoList"
             },
             "host": {
                 "Fn::Join": [
@@ -90,7 +90,7 @@
             ],
             "paths": {
               
-              "/ping": {
+              "/todo": {
                 "options": {
                   "consumes": [
                     "application/json"
@@ -176,7 +176,7 @@
                             
                             {
                                 
-                                "Ref": "functionpingPongArn"
+                                "Ref": "functiontodoListArn"
                             },
                             
                             "/invocations"
@@ -189,7 +189,7 @@
                   }
                 }
               },
-              "/ping/{proxy+}": {
+              "/todo/{proxy+}": {
                 "options": {
                   "consumes": [
                     "application/json"
@@ -275,7 +275,7 @@
                           
                           {
                             
-                            "Ref": "functionpingPongArn"
+                            "Ref": "functiontodoListArn"
                           },
                           
                           "/invocations"
@@ -332,12 +332,12 @@
                   
         
         
-        "functionpingPongPermissionpingApi": {
+        "functiontodoListPermissionapiTodoList": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionpingPongName"
+                        "Ref":  "functiontodoListName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -356,7 +356,7 @@
                             },
                             ":",
                             {
-                                "Ref": "pingApi"
+                                "Ref": "apiTodoList"
                             },
                             "/*/*/*"
                         ]
@@ -367,7 +367,7 @@
         
         
         
-      "DeploymentAPIGWpingApi": {
+      "DeploymentAPIGWapiTodoList": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -381,7 +381,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "pingApi"
+            "Ref": "apiTodoList"
           }
         }
       }
@@ -389,15 +389,15 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "pingApi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "apiTodoList"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "pingApi"
+          "Value": "apiTodoList"
         },
         "ApiId": {
           "Description": "API ID (prefix of API URL)",
-          "Value": {"Ref": "pingApi"}
+          "Value": {"Ref": "apiTodoList"}
         }
     }
   }

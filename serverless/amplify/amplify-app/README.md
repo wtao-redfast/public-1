@@ -6,22 +6,27 @@
 
 ## Backend
 1. Function
-express.js server as Lambda function to 
-+ server REST API requests, /todo/version
-* invoke GraphQL api from the lambda, /todo
+
+* Serverless express function (Integration with Amazon API Gateway) - `/todo/version`
+* Call internal lambda function with [IAM role](./images/lambda-execution-role.png) + [IAM policies](./images/lambda2lambda-role-policies.png) - `timeService` 
+* Invoke GraphQL api from the lambda - `todo`
+* TODO - Use layers to share common code between functions
 
 2. APIs
-+ apiTodoList to connect Lambda
-+ apiTodoListGrpah to connect GraphQL + DynmoDB
++ `apiTodoList` to connect Lambda
++ `apiTodoListGrpah` to connect GraphQL + DynmoDB
 
 3. AWS secret is saved and auto managed by the `aws-export.js` file; it is not pushed in github
 
 ## AWS services used
-1. AWS Amplify - as the top level umbrella service
+1. Amplify - as the top level umbrella service
 2. API Gateway + Lambda - for RESTful interface
-3. AWS AppSync - for GraphQL interface
+3. AppSync - for GraphQL interface
 4. DynamoDB - NoSQL provider
 5. CloudWatch - service observability
-6. TODO - AWS S3
+6. TODO - AWS S3 & CloundFront
 7. TODO - AWS Cognito for authn and authz
 8. TODO - API Analytics
+9. TODO - Simople Queue Service
+10. TODO - CI/CD with Github
+

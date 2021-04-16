@@ -8,6 +8,21 @@ See the License for the specific language governing permissions and limitations 
 
 
 const postTodo = require('./todoGraph');
+const aws = require('aws-sdk');
+
+const lambda = new aws.Lambda({
+  region: 'us-west-2'
+});
+
+const invokeLambda = (lambda, params) => new Promise((resolve, reject) => {
+  lambda.invoke(params, (error, data) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(JSON.parse(data.Payload));
+    }
+  });
+});
 
 var express = require('express')
 var bodyParser = require('body-parser')
@@ -30,9 +45,14 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/todo/version', (req, res) => {
-  // Add your code here
-  res.json({version: '1.0.1'});
+app.get('/todo/version', async (req, res) => {
+  const params = {
+    FunctionName: 'timeService-dev',
+    InvocationType: 'RequestResponse',
+    Payload: JSON.stringify({})
+  }
+  const resp = await invokeLambda(lambda, params);
+  res.json({version: '1.0.1', time: resp.body});
 });
 
 app.post('/todo/', async (req, res) => {

@@ -15,7 +15,11 @@
       "function": {
         "todoList": {
           "deploymentBucketName": "amplify-amplifyapp-dev-95833-deployment",
-          "s3Key": "amplify-builds/todoList-6170714a627836653875-build.zip"
+          "s3Key": "amplify-builds/todoList-6b6146614134456f4c50-build.zip"
+        },
+        "timeService": {
+          "deploymentBucketName": "amplify-amplifyapp-dev-95833-deployment",
+          "s3Key": "amplify-builds/timeService-70435246464d4866384a-build.zip"
         }
       }
     }

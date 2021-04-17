@@ -14,9 +14,9 @@
 * SQS to trigger an internal utility lamda service - `printService`
 * TODO - Use layers to share common code between functions
 * Secruity
-    * IAM role - lambdfa function has [execution role](./images/lambda-execution-role.png)
+    * IAM role - lambda function has [execution role](./images/lambda-execution-role.png)
     * IAM policies - Execution role has [policies](./images/lambda-execution-role+policies.png) to enable such as, call another lambda, send message to SQS
-    * Add a [role](./images/sqs-role.png) to SQS to allow msend message
+    * Add a [role](./images/sqs-role.png) to SQS to allow a lambda send message to the queue
 
 2. APIs
 + `apiTodoList` to connect Lambda

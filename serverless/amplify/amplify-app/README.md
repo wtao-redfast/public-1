@@ -24,9 +24,12 @@
 3. AppSync - for GraphQL interface
 4. DynamoDB - NoSQL provider
 5. CloudWatch - service observability
-6. TODO - AWS S3 & CloundFront
+6. Simople Queue Service - application message queue
 7. TODO - AWS Cognito for authn and authz
-8. TODO - API Analytics
-9. TODO - Simople Queue Service
+8. TODO - AWS S3 & CloundFront
+9. TODO - API Analytics
 10. TODO - CI/CD with Github
 
+
+## Notes
+1. aws-exports.js - contains all the aws secrets are not included

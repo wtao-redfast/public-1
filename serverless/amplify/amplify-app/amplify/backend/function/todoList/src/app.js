@@ -8,21 +8,8 @@ See the License for the specific language governing permissions and limitations 
 
 
 const postTodo = require('./todoGraph');
-const aws = require('aws-sdk');
-
-const lambda = new aws.Lambda({
-  region: 'us-west-2'
-});
-
-const invokeLambda = (lambda, params) => new Promise((resolve, reject) => {
-  lambda.invoke(params, (error, data) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(JSON.parse(data.Payload));
-    }
-  });
-});
+const { getTime } = require('./todoLambda');
+const { sendMessage } = require('./todoSQS');
 
 var express = require('express')
 var bodyParser = require('body-parser')
@@ -46,18 +33,18 @@ app.use(function(req, res, next) {
  **********************/
 
 app.get('/todo/version', async (req, res) => {
-  const params = {
-    FunctionName: 'timeService-dev',
-    InvocationType: 'RequestResponse',
-    Payload: JSON.stringify({})
-  }
-  const resp = await invokeLambda(lambda, params);
+  const resp = await getTime();
   res.json({version: '1.0.1', time: resp.body});
 });
 
 app.post('/todo/', async (req, res) => {
   await postTodo(req.body.name, req.body.description);
-  res.json({success: 'pong', url: req.url});
+  res.json({success: 'true', url: req.url});
+});
+
+app.get('/todo/print/:noteId', async (req, res) => {
+  await sendMessage(req.params.noteId);
+  res.json({success: 'true', url: req.url});
 });
 
 app.listen(3000, function() {

@@ -20,8 +20,8 @@
     * Add a [role](./images/sqs-role.png) to SQS Access policy to allow a lambda send message to the queue
 
 2. APIs
-+ `apiTodoList` to connect Lambda RESTful APIs
-+ `apiTodoListGraph` to connect AppSync + GraphQL + DynamoDB
++ `apiTodoList` to RESTful API gateway to `todoList`
++ `apiTodoListGraph` to connect `AppSync + GraphQL + DynamoDB`
 
 3. AWS secret is saved and auto managed by the `aws-export.js` file; it is not pushed in github. [Example](./images/aws-exports.png)
 

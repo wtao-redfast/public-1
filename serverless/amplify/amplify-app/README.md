@@ -3,6 +3,7 @@
 ## Frontend react.js app
 1. Invoke API gateway + Lambda
 2. Invoke GraphQL
+3. Support user authentication - `login.js`
 
 ## Backend
 1. Function
@@ -32,7 +33,7 @@
 4. DynamoDB - NoSQL provider
 5. CloudWatch - service observability
 6. Simople Queue Service - application message queue
-7. TODO - AWS Cognito for authn and authz
+7. AWS Cognito for authn and authz
 8. TODO - AWS S3 & CloundFront
 9. TODO - API Analytics
 10. TODO - CI/CD with Github

@@ -6,8 +6,12 @@ import { listTodos } from './graphql/queries';
 import { createTodo } from './graphql/mutations';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
+import { Auth } from 'aws-amplify';
+import { useHistory } from "react-router-dom";
 
 function App() {
+  let history = useHistory();
+
   React.useEffect(() => {
     (async () => {
       let result = await API.get('apiTodoList', '/todo/version');
@@ -32,15 +36,21 @@ function App() {
   };
 
   const onCreateToDoGraph = async () => {
-    await API.graphql({
-      query: createTodo,
-      variables: { input: {
-        id: uuid(),
-        name: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        description: 'hola world',
-        completed: false
-      } }
-    });
+    try {
+      await Auth.currentAuthenticatedUser();
+      await API.graphql({
+        query: createTodo,
+        variables: { input: {
+          id: uuid(),
+          name: moment().format('MMMM Do YYYY, h:mm:ss a'),
+          description: 'hola world',
+          completed: false
+        } }
+      });
+    } catch(e) {
+      console.log(e);
+      history.push('/login')
+    }
   };
 
   return (

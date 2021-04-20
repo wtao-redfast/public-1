@@ -25,6 +25,9 @@
           "deploymentBucketName": "amplify-amplifyapp-dev-95833-deployment",
           "s3Key": "amplify-builds/printService-6a7053726e634d336c62-build.zip"
         }
+      },
+      "auth": {
+        "amplifyappcef0221b": {}
       }
     }
   }

@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Sepiafy",
+  "version": "1.0",
+
+  "description": "Change sepia level of a webpage",
+
+  "icons": {
+    "48": "icon-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["/sepiafy.js"]
+    }
+  ],
+
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "48": "icon-48.png"
+    },
+    "default_title": "Sepiafy",
+    "default_popup": "/popup.html"
+  },
+
+  "permissions": [
+    "storage"
+  ]
+}

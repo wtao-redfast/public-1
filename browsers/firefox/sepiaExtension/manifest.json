@@ -25,6 +25,13 @@
     "default_popup": "/popup.html"
   },
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{48f70b46-6507-49d5-a72d-98110af51f85}",
+      "strict_min_version": "42.0"
+    }
+  },
+
   "permissions": [
     "storage"
   ]

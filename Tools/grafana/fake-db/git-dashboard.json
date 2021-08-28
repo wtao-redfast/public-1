@@ -222,7 +222,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1258",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -231,7 +230,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1259",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -315,7 +313,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  the_date AS \"time\",\n  sum(lines_added+lines_removed)\nFROM git_daily_status\nWHERE\n  team = 1 and $__timeFilter(the_date)\nGROUP BY the_date\nORDER BY the_date",
+          "rawSql": "SELECT\n  the_date AS \"time\",\n  sum(lines_added),\n  sum(lines_removed)\nFROM git_daily_status\nWHERE\n  team = 1 and $__timeFilter(the_date)\nGROUP BY the_date\nORDER BY the_date",
           "refId": "A",
           "select": [
             [
@@ -373,7 +371,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:202",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -382,7 +379,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:203",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -651,5 +647,5 @@
   "timezone": "",
   "title": "git code base",
   "uid": "wO2VZHVnz",
-  "version": 20
+  "version": 22
 }

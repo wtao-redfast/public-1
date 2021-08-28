@@ -1,10 +1,15 @@
 # Fake MySQL database to display scrum activities in Grafana
 
-0. Use mysqlsh shell
+0. Access database
+
+    0.1. Use Visual Studio Code extension: MySQL
+    https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2
+
+    0.2. Use mysqlsh shell
 - When running the shell, use `\c` to log in database; use `sql` to execute a sql command; use `quit` to quit.
 ```bash
 [mysqlsh prompt]\c grafana:grafana@localhost
-[mysqlsh prompt]\s select * from scrums.daily_status
+[mysqlsh prompt]\sql select * from scrums.daily_status
 [mysqlsh prompt]\quit
 ```
 - Or, use the shell program with parameters to execute sql directly, e.g.
@@ -138,4 +143,19 @@ ORDER BY the_date
 SELECT COUNT(DISTINCT(member_name)) as value
 FROM daily_status
 WHERE team="alpha"
+```
+
+```sql
+/* aggregate code line changes by week*/
+SELECT
+   scrum_members.member_name as Name,
+   scrum_teams.team_name as Team,
+   SUM(lines_added) as LineAdded,
+   SUM(lines_removed) as LineRemoved
+FROM git_daily_status
+   INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id
+   INNER JOIN scrum_teams ON git_daily_status.team = scrum_teams.id
+WHERE '2020-12-12' <= the_date AND the_date <= '2020-12-19'
+GROUP BY scrum_members.member_name, scrum_teams.team_name
+ORDER BY scrum_members.member_name
 ```

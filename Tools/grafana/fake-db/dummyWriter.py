@@ -19,7 +19,7 @@ teamMemberNames = [
         'Dylan'
     ]
 ]
-numOfDays = 14
+numOfDays = 56
 startDate = datetime.datetime(2020, 12, 12) 
 
 class RecordBase:
@@ -27,21 +27,40 @@ class RecordBase:
         self.cnx = connetcor
         self.cursor = cursor
 
+    def getScrumMemberId(self, memberName):
+        sql = f'SELECT * FROM scrum_members WHERE member_name = "{memberName}"'
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        if self.cursor.rowcount != 1:
+            raise Exception('unexpected scrum member name')
+        return result[0]
+
+    def getScrumTeamId(self, teamName):
+        sql = f'SELECT * FROM scrum_teams WHERE team_name = "{teamName}"'
+        self.cursor.execute(sql)
+        result = self.cursor.fetchone()
+        if self.cursor.rowcount != 1:
+            raise Exception('unexpected scrum team name')
+        return result[0]
+
 class RecordSourceCode(RecordBase):
     def writeSourceCodeRecord(self, date, member, team, linesAdded, linesRemoved):
-        sql = f'SELECT * FROM daily_status WHERE the_date = "{date}" AND member_name = "{member}"'
+        memberId = self.getScrumMemberId(member)
+        teamId = self.getScrumTeamId(team)
+
+        sql = f'SELECT * FROM git_daily_status WHERE the_date = "{date}" AND member_name = "{memberId}" AND team = "{teamId}"'
         self.cursor.execute(sql)
         self.cursor.fetchone()
         if self.cursor.rowcount <= 0:
-            sql = 'INSERT INTO daily_status ' +\
+            sql = 'INSERT INTO git_daily_status ' +\
                 '(the_date, member_name, team, lines_added, lines_removed) ' +\
-                f'VALUES ("{date}", "{member}", "{team}", {linesAdded}, {linesRemoved})'
+                f'VALUES ("{date}", "{memberId}", "{teamId}", {linesAdded}, {linesRemoved})'
         else:
-            sql = 'UPDATE daily_status ' +\
+            sql = 'UPDATE git_daily_status ' +\
                 f'SET ' +\
                 f'  lines_added = {linesAdded}, ' +\
                 f'  lines_removed = {linesRemoved} ' +\
-                f'WHERE the_date = "{date}" AND member_name = "{member}"'
+                f'WHERE the_date = "{date}" AND member_name = "{memberId}"'
         self.cursor.execute(sql)
         self.cnx.commit()
 
@@ -102,12 +121,12 @@ try:
     rec.createRecords()
 
     # write sprint ticket and story activities per team
-    rec = RecordSprint(cnx, cursor)
-    rec.createTeamSprints()
+    #rec = RecordSprint(cnx, cursor)
+    #rec.createTeamSprints()
 
     # write current sprint activities per team
-    rec = RecordCurrentSprint(cnx, cursor)
-    rec.createCurrentSprints()
+    #rec = RecordCurrentSprint(cnx, cursor)
+    #rec.createCurrentSprints()
 except Exception as err:
     print(err)
 finally:

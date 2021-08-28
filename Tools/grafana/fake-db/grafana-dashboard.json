@@ -488,6 +488,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:202",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -496,6 +497,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:203",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -637,6 +639,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1258",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -645,6 +648,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1259",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -657,6 +661,96 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "25%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "MySQL",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fontSize": "80%",
+      "format": "none",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 11,
+        "y": 25
+      },
+      "id": 22,
+      "interval": null,
+      "legend": {
+        "header": "",
+        "show": true,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "nullPointMode": "connected",
+      "pieType": "pie",
+      "pluginVersion": "7.3.5",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_added) As \"value\",\n  CAST(scrum_members.member_name as CHAR) as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "git_daily_status",
+          "timeColumn": "the_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Code contribution percentage",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
     }
   ],
   "refresh": false,
@@ -667,12 +761,12 @@
     "list": []
   },
   "time": {
-    "from": "2020-12-12T08:00:00.000Z",
-    "to": "2020-12-25T08:00:00.000Z"
+    "from": "2020-12-12T00:00:00.000Z",
+    "to": "2020-12-25T00:00:00.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "scrums",
   "uid": "fnZzO3xGk",
-  "version": 52
+  "version": 71
 }

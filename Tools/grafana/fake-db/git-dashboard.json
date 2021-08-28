@@ -222,6 +222,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1258",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -230,6 +231,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1259",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -371,6 +373,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:202",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -379,6 +382,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:203",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -410,7 +414,7 @@
       "fontSize": "80%",
       "format": "none",
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 0,
         "y": 15
@@ -433,7 +437,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_removed) As \"value\",\n  CAST(scrum_members.member_name as CHAR) as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_removed) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
           "refId": "A",
           "select": [
             [
@@ -499,7 +503,7 @@
       "fontSize": "80%",
       "format": "none",
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 6,
         "y": 15
@@ -523,7 +527,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_added) As \"value\",\n  CAST(scrum_members.member_name as CHAR) as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_added) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
           "refId": "A",
           "select": [
             [
@@ -602,7 +606,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() as \"time\",\n  SUM(lines_added) as \"Total Lines Added\",\n  SUM(lines_removed) as \"Total Lines Removed\"\nFROM git_daily_status\nWHERE team=1 and $__timeFilter(the_date)\nGROUP BY team\n",
+          "rawSql": "SELECT\n  NOW() as \"time\",\n  SUM(lines_added) as \"Total Lines Added\",\n  SUM(lines_removed) as \"Total Lines Removed\"\nFROM git_daily_status\nWHERE team=1 and $__timeFilter(the_date)\n",
           "refId": "A",
           "select": [
             [
@@ -640,12 +644,12 @@
     "list": []
   },
   "time": {
-    "from": "2020-12-11T08:00:00.000Z",
-    "to": "2020-12-21T07:59:59.000Z"
+    "from": "2020-12-12T08:00:00.000Z",
+    "to": "2020-12-18T08:00:00.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "git code base",
   "uid": "wO2VZHVnz",
-  "version": 22
+  "version": 28
 }

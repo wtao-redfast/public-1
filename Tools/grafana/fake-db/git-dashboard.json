@@ -222,7 +222,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1258",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -231,7 +230,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1259",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -373,7 +371,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:202",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -382,7 +379,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:203",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -644,7 +640,7 @@
     "list": []
   },
   "time": {
-    "from": "2020-12-12T08:00:00.000Z",
+    "from": "2020-12-11T08:00:00.000Z",
     "to": "2020-12-18T08:00:00.000Z"
   },
   "timepicker": {},

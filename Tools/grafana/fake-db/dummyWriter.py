@@ -84,8 +84,8 @@ class RecordSourceCode(RecordBase):
         for _ in range(numOfDays):
             for team in range(len(teamNames)):
                 for member in range(len(teamMemberNames[team])):
-                    linesAdded = int(random.random() * 200)
-                    linesRemoved = int(random.random() * 200)
+                    linesAdded = random.randrange(200) + 1
+                    linesRemoved = random.randrange(50) + 1
                     self.writeSourceCodeRecord(date, teamMemberNames[team][member], teamNames[team], linesAdded, linesRemoved)
             date += datetime.timedelta(days = 1)
 
@@ -116,20 +116,40 @@ class RecordGithub(RecordBase):
         self.cursor.execute(sql)
         self.cnx.commit()
 
-    def createRecords(self):
+    def createPRRecords(self):
         pr_num = 0
         for team in range(len(teamNames)):
             for member in range(len(teamMemberNames[team])):
                 for _ in range(teamMemberPRs[team][member]):
-                    created_at = startDate + datetime.timedelta(days = int(random.random() * 4))
-                    flip = random.randint(0, 1)
+                    created_at = startDate + datetime.timedelta(days = random.randrange(4))
+                    flip = random.randrange(2)
                     state = 'open'
                     closed_at = None
                     if flip == 0:
                         state = 'closed'
-                        closed_at = created_at + datetime.timedelta(hours = int(random.random() * 48) + 1)
+                        closed_at = created_at + datetime.timedelta(hours = random.randrange(48) + 1)
                     self.writePullRequestRecord(created_at, closed_at, pr_num, teamMemberNames[team][member], teamNames[team], state)
                     pr_num += 1
+
+    def createReviewRecords(self):
+        # need to reset the github_review table each time call this function
+        sql = f'SELECT * FROM github_pull_requests'
+        self.cursor.execute(sql)
+        prs = self.cursor.fetchall()
+        for pr in prs:
+            pr_num = pr[3]
+            submitted_at = pr[1]
+            random_review_count = random.randrange(5)
+            for _ in range(random_review_count):
+                teamId = random.randrange(2)
+                memberId = random.randrange(len(teamMemberNames[teamId])) + 1
+                submitted_at += datetime.timedelta(minutes=1)
+                sql = 'INSERT INTO github_reviews ' +\
+                        '(pr_num, member_name, team, submitted_at) ' +\
+                        f'VALUES ({pr_num}, {memberId}, {teamId + 1}, "{submitted_at}")'
+                self.cursor.execute(sql)
+                self.cnx.commit()
+        return
 
 class RecordSprint(RecordBase):
     def writeSprintRecord(self, date, name, team, totalTickets, totalStoryPotins, completedTickets, completedStoryPoints):
@@ -178,7 +198,8 @@ try:
     #rec.createRecords()
 
     rec = RecordGithub(cnx, cursor)
-    rec.createRecords()
+    #rec.createPRRecords()
+    rec.createReviewRecords()
 
     # write sprint ticket and story activities per team
     #rec = RecordSprint(cnx, cursor)

@@ -162,17 +162,45 @@ class RecordSprint(RecordBase):
                 f'VALUES ("{start_date}", "{end_date}", {sprint_id}, {ticket_count}, {completed_tickets}, {completed_story_points})'
         else:
             sql = 'UPDATE jira_sprints ' +\
-                f'SET start_date = "{start_date}", start_date = "{end_date}", sprint_id={sprint_id}, total_tickets = {ticket_count}, completed_tickets = {completed_tickets}, completed_story_points = {completed_story_points}'
+                f'SET start_date = "{start_date}", start_date = "{end_date}", ticket_count = {ticket_count}, completed_tickets = {completed_tickets}, completed_story_points = {completed_story_points} WHERE sprint_id={sprint_id}'
         self.cursor.execute(sql)
         self.cnx.commit()
 
     def createSprints(self):
         date = startDate
-        self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1531, 20, 17, 38)
+        self.writeSprintRecord(date, date + datetime.timedelta(days = 6), 1531, 20, 17, 38)
         date += datetime.timedelta(days = 6)
         self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1532, 14, 14, 28)
         date += datetime.timedelta(days = 6)
         self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1533, 17, 13, 25)
+        date += datetime.timedelta(days = 6)
+        self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1534, 12, 12, 26)
+
+    def writeMemberSprintRecord(self, member, sprint_id, completed_tickets, completed_story_points):
+        member_name = self.getScrumMemberId(member)
+
+        sql = f'SELECT * FROM jira_sprints_members WHERE sprint_id = {sprint_id} and member_name = {member_name}'
+        self.cursor.execute(sql)
+        self.cursor.fetchone()
+        if self.cursor.rowcount <= 0:
+            sql = 'INSERT INTO jira_sprints_members ' +\
+                '(member_name, sprint_id, completed_tickets, completed_story_points) ' +\
+                f'VALUES ({member_name}, {sprint_id}, {completed_tickets}, {completed_story_points})'
+        else:
+            sql = 'UPDATE jira_sprints_members ' +\
+                f'SET completed_tickets = {completed_tickets}, completed_story_points = {completed_story_points} WHERE sprint_id = {sprint_id} and member_name = {member_name}'
+        self.cursor.execute(sql)
+        self.cnx.commit()
+
+    def createMemberSprints(self):
+        sprint_id = 1531
+        for _ in range(4):
+            for member in range(len(teamMemberNames[0])):
+                completed_tickets = random.randrange(8) + 1
+                completed_story_points = completed_tickets * (random.randrange(3) + 1)
+                self.writeMemberSprintRecord(teamMemberNames[0][member], sprint_id, completed_tickets, completed_story_points)
+            sprint_id += 1
+        return
 
 class RecordCurrentSprint(RecordBase):
     def writeCurrentSprintRecord(self, sprint_name, team, total_tickets, total_todo, total_inprogress, total_blocked, total_completed, days_remained):
@@ -207,6 +235,7 @@ try:
     # write sprint ticket and story activities per team
     rec = RecordSprint(cnx, cursor)
     rec.createSprints()
+    rec.createMemberSprints()
 except Exception as err:
     print(err)
 finally:

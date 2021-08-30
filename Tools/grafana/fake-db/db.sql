@@ -111,3 +111,17 @@ CREATE TABLE `jira_sprints` (
   PRIMARY KEY (`id`),
   KEY `sprint_id` (`sprint_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+/* jira sprint member contribution history */
+CREATE TABLE `jira_sprints_members` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `member_name` int NOT NULL,
+  `sprint_id` int NOT NULL,
+  `completed_tickets` int NOT NULL,
+  `completed_story_points` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `member_name` (`member_name`),
+  KEY `sprint_id` (`sprint_id`),
+  CONSTRAINT `jira_sprints_members_ibfk_1` FOREIGN KEY (`member_name`) REFERENCES `scrum_members` (`id`),
+  CONSTRAINT `jira_sprints_members_ibfk_2` FOREIGN KEY (`sprint_id`) REFERENCES `jira_sprints` (`sprint_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

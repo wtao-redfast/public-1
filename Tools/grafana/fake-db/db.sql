@@ -78,5 +78,23 @@ CREATE TABLE `fake_jira_snapshot` (
   `total_inprogress_epics` int NOT NULL,
   `total_completed_epics` int NOT NULL,
   `total_todo_epics` int NOT NULL,
+  `current_sprint_todo` int NOT NULL,
+  `current_sprint_inprog` int NOT NULL,
+  `current_sprint_blocked` int NOT NULL,
+  `current_sprint_review` int NOT NULL,
+  `current_sprint_uat` int NOT NULL,
+  `current_sprint_done` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+
+/* fake current sprint story points distribution */
+SELECT 
+  now() as time,
+  column_0 as "To DO",
+  column_1 as "In Progress",
+  column_2 as "Blocked",
+  column_3 as "In Review",
+  column_4 as "UAT",
+  column_5 as "Done"
+from 
+ (values Row(15,  3,  2, 4, 12, 13)) as fake

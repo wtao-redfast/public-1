@@ -10,6 +10,8 @@ import {
 } from '@grafana/data';
 
 import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
+import { fromPairs } from 'lodash';
+import getJiraBoardSnapshot from './jira-board';
 
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   settings?: DataSourceInstanceSettings<MyDataSourceOptions>
@@ -24,7 +26,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     const from = range!.from.valueOf();
     const to = range!.to.valueOf();
 
-    // Return a constant for each query.
+    // Example: Return a constant for each query.
     const data = options.targets.map(target => {
       const query = defaults(target, defaultQuery);
       return new MutableDataFrame({
@@ -35,8 +37,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         ],
       });
     });
-
-    return { data };
+    /*return { data };*/
+    return getJiraBoardSnapshot(options);
   }
 
   async testDatasource() {

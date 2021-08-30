@@ -1,20 +1,11 @@
-import defaults from 'lodash/defaults';
+import { DataQueryRequest, DataQueryResponse, DataSourceApi, DataSourceInstanceSettings } from '@grafana/data';
 
-import {
-  DataQueryRequest,
-  DataQueryResponse,
-  DataSourceApi,
-  DataSourceInstanceSettings,
-  MutableDataFrame,
-  FieldType,
-} from '@grafana/data';
-
-import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
-import { fromPairs } from 'lodash';
+import { MyQuery, MyDataSourceOptions } from './types';
+//import { fromPairs } from 'lodash';
 import getJiraBoardSnapshot from './jira-board';
 
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
-  settings?: DataSourceInstanceSettings<MyDataSourceOptions>
+  settings?: DataSourceInstanceSettings<MyDataSourceOptions>;
 
   constructor(instanceSettings: DataSourceInstanceSettings<MyDataSourceOptions>) {
     super(instanceSettings);
@@ -22,12 +13,12 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   }
 
   async query(options: DataQueryRequest<MyQuery>): Promise<DataQueryResponse> {
+    // Example: Return a constant for each query.
+    /*
     const { range } = options;
     const from = range!.from.valueOf();
     const to = range!.to.valueOf();
-
-    // Example: Return a constant for each query.
-    const data = options.targets.map(target => {
+    const data = options.targets.map((target) => {
       const query = defaults(target, defaultQuery);
       return new MutableDataFrame({
         refId: query.refId,
@@ -37,7 +28,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         ],
       });
     });
-    /*return { data };*/
+    return { data };
+    */
     return getJiraBoardSnapshot(options);
   }
 

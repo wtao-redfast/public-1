@@ -152,24 +152,27 @@ class RecordGithub(RecordBase):
         return
 
 class RecordSprint(RecordBase):
-    def writeSprintRecord(self, date, name, team, totalTickets, totalStoryPotins, completedTickets, completedStoryPoints):
-        sql = f'SELECT * FROM sprint_team WHERE start_date = "{date}" AND team = "{team}"'
+    def writeSprintRecord(self, start_date, end_date, sprint_id, ticket_count, completed_tickets, completed_story_points):
+        sql = f'SELECT * FROM jira_sprints WHERE sprint_id = {sprint_id}'
         self.cursor.execute(sql)
         self.cursor.fetchone()
         if self.cursor.rowcount <= 0:
-            sql = 'INSERT INTO sprint_team ' +\
-                '(start_date, name, team, total_tickets, total_storypoints, completed_tickets, completed_storypoints) ' +\
-                f'VALUES ("{date}", "{name}", "{team}", {totalTickets}, {totalStoryPotins}, {completedTickets}, {completedStoryPoints})'
-            self.cursor.execute(sql)
-            self.cnx.commit()
+            sql = 'INSERT INTO jira_sprints ' +\
+                '(start_date, end_date, sprint_id, ticket_count, completed_tickets, completed_story_points) ' +\
+                f'VALUES ("{start_date}", "{end_date}", {sprint_id}, {ticket_count}, {completed_tickets}, {completed_story_points})'
+        else:
+            sql = 'UPDATE jira_sprints ' +\
+                f'SET start_date = "{start_date}", start_date = "{end_date}", sprint_id={sprint_id}, total_tickets = {ticket_count}, completed_tickets = {completed_tickets}, completed_story_points = {completed_story_points}'
+        self.cursor.execute(sql)
+        self.cnx.commit()
 
-    def createTeamSprints(self):
+    def createSprints(self):
         date = startDate
-        self.writeSprintRecord(date, "sprint 21", teamNames[0], 23, 69, 18, 54)
-        self.writeSprintRecord(date, "sprint 21", teamNames[1], 18, 54, 10, 30)
-        date += datetime.timedelta(days = 7)
-        self.writeSprintRecord(date, "sprint 22", teamNames[0], 20, 60, 18, 54)
-        self.writeSprintRecord(date, "sprint 22", teamNames[1], 15, 45, 15, 45)
+        self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1531, 20, 17, 38)
+        date += datetime.timedelta(days = 6)
+        self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1532, 14, 14, 28)
+        date += datetime.timedelta(days = 6)
+        self.writeSprintRecord(date, date +datetime.timedelta(days = 6), 1533, 17, 13, 25)
 
 class RecordCurrentSprint(RecordBase):
     def writeCurrentSprintRecord(self, sprint_name, team, total_tickets, total_todo, total_inprogress, total_blocked, total_completed, days_remained):
@@ -197,17 +200,13 @@ try:
     #rec = RecordSourceCode(cnx, cursor)
     #rec.createRecords()
 
-    rec = RecordGithub(cnx, cursor)
+    #rec = RecordGithub(cnx, cursor)
     #rec.createPRRecords()
-    rec.createReviewRecords()
+    #rec.createReviewRecords()
 
     # write sprint ticket and story activities per team
-    #rec = RecordSprint(cnx, cursor)
-    #rec.createTeamSprints()
-
-    # write current sprint activities per team
-    #rec = RecordCurrentSprint(cnx, cursor)
-    #rec.createCurrentSprints()
+    rec = RecordSprint(cnx, cursor)
+    rec.createSprints()
 except Exception as err:
     print(err)
 finally:

@@ -98,3 +98,16 @@ SELECT
   column_5 as "Done"
 from 
  (values Row(15,  3,  2, 4, 12, 13)) as fake
+
+/* jira sprint history */
+CREATE TABLE `jira_sprints` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `start_date` datetime DEFAULT NULL COMMENT 'create time',
+  `end_date` datetime DEFAULT NULL COMMENT 'update time',
+  `sprint_id` int NOT NULL,
+  `ticket_count` int NOT NULL,
+  `completed_tickets` int NOT NULL,
+  `completed_story_points` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sprint_id` (`sprint_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -43,7 +43,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 12,
+        "w": 9,
         "x": 0,
         "y": 0
       },
@@ -157,6 +157,87 @@
       "type": "stat"
     },
     {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 60
+              },
+              {
+                "color": "green",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 9,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "7.3.5",
+      "targets": [
+        {
+          "alias": "",
+          "csvWave": {
+            "timeStep": 60,
+            "valuesCSV": "0,0,2,2,1,1"
+          },
+          "lines": 10,
+          "points": [],
+          "pulseWave": {
+            "offCount": 3,
+            "offValue": 1,
+            "onCount": 3,
+            "onValue": 2,
+            "timeStep": 60
+          },
+          "refId": "A",
+          "scenarioId": "random_walk",
+          "stream": {
+            "bands": 1,
+            "noise": 2.2,
+            "speed": 250,
+            "spread": 3.5,
+            "type": "signal"
+          },
+          "stringInput": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Unit test coverage",
+      "type": "gauge"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -172,8 +253,8 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 12,
-        "x": 12,
+        "w": 11,
+        "x": 13,
         "y": 0
       },
       "hiddenSeries": false,
@@ -669,5 +750,5 @@
   "timezone": "",
   "title": "github activity",
   "uid": "5_l5nO47z",
-  "version": 52
+  "version": 55
 }

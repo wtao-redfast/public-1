@@ -67,3 +67,16 @@ CREATE TABLE `github_reviews` (
   CONSTRAINT `github_reviews_ibfk_2` FOREIGN KEY (`team`) REFERENCES `scrum_teams` (`id`),
   CONSTRAINT `github_reviews_ibfk_3` FOREIGN KEY (`pr_num`) REFERENCES `github_pull_requests` (`pr_num`)
 ) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8
+
+/* fake jira board snapshot*/
+CREATE TABLE `fake_jira_snapshot` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `total_backlog` int NOT NULL,
+  `total_blocked` int NOT NULL,
+  `total_bugs` int NOT NULL,
+  `total_p0_bugs` int NOT NULL,
+  `total_inprogress_epics` int NOT NULL,
+  `total_completed_epics` int NOT NULL,
+  `total_todo_epics` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8

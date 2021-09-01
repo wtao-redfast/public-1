@@ -71,7 +71,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Total\"\nFROM github_pull_requests\nWHERE $__timeFilter(created_at) and team=1\n",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Total\"\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE $__timeFilter(created_at) and scrum_members.team=1\n",
           "refId": "A",
           "select": [
             [
@@ -99,7 +99,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Open\"\nFROM github_pull_requests\nWHERE $__timeFilter(created_at) and team=1 and state=\"open\"",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Open\"\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE $__timeFilter(created_at) and scrum_members.team=1 and state=\"open\"",
           "refId": "B",
           "select": [
             [
@@ -127,7 +127,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Closed\"\nFROM github_pull_requests\nWHERE $__timeFilter(created_at) and team=1 and state=\"closed\"",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"Closed\"\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE $__timeFilter(created_at) and scrum_members.team=1 and state=\"closed\"",
           "refId": "C",
           "select": [
             [
@@ -289,7 +289,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n CAST(base.datetime as DATE) as \"time\",\n base.value as \"Opened PRs\"\nFROM (\n    SELECT\n    DATE_FORMAT(created_at, \"%Y-%m-%d\") AS \"datetime\",\n    COUNT(*) As \"value\"\n    FROM github_pull_requests\n    WHERE\n        $__timeFilter(created_at) and team=1\n    GROUP BY DATE_FORMAT(created_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(created_at, \"%Y-%m-%d\")\n) as base",
+          "rawSql": "SELECT\n CAST(base.datetime as DATE) as \"time\",\n base.value as \"Opened PRs\"\nFROM (\n    SELECT\n    DATE_FORMAT(created_at, \"%Y-%m-%d\") AS \"datetime\",\n    COUNT(*) As \"value\"\n    FROM github_pull_requests\n      INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\n    WHERE\n        $__timeFilter(created_at) and scrum_members.team=1\n    GROUP BY DATE_FORMAT(created_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(created_at, \"%Y-%m-%d\")\n) as base",
           "refId": "A",
           "select": [
             [
@@ -318,7 +318,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n CAST(base.datetime as DATE) as \"time\",\n base.value as \"Closed PRs\"\nFROM (\n    SELECT\n    DATE_FORMAT(closed_at, \"%Y-%m-%d\") AS \"datetime\",\n    COUNT(*) As \"value\"\n    FROM github_pull_requests\n    WHERE\n        $__timeFilter(closed_at) and team=1\n    GROUP BY DATE_FORMAT(closed_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(closed_at, \"%Y-%m-%d\")\n) as base",
+          "rawSql": "SELECT\n CAST(base.datetime as DATE) as \"time\",\n base.value as \"Closed PRs\"\nFROM (\n    SELECT\n    DATE_FORMAT(closed_at, \"%Y-%m-%d\") AS \"datetime\",\n    COUNT(*) As \"value\"\n    FROM github_pull_requests\n      INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\n    WHERE\n        $__timeFilter(closed_at) and scrum_members.team=1\n    GROUP BY DATE_FORMAT(closed_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(closed_at, \"%Y-%m-%d\")\n) as base",
           "refId": "B",
           "select": [
             [
@@ -438,7 +438,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE\n  $__timeFilter(created_at) and github_pull_requests.team=1\nGROUP BY github_pull_requests.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE\n  $__timeFilter(created_at) and scrum_members.team=1\nGROUP BY github_pull_requests.member_name",
           "refId": "A",
           "select": [
             [
@@ -517,7 +517,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE\n  $__timeFilter(closed_at) and github_pull_requests.team=1\nGROUP BY github_pull_requests.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_pull_requests\n  INNER JOIN scrum_members ON github_pull_requests.member_name = scrum_members.id\nWHERE\n  $__timeFilter(closed_at) and scrum_members.team=1\nGROUP BY github_pull_requests.member_name",
           "refId": "A",
           "select": [
             [
@@ -598,7 +598,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n CAST(base.submitted as DATE) as time,\n base.member as metric,\n base.count\nFROM (\n    SELECT\n      scrum_members.member_name as member,\n      DATE_FORMAT(submitted_at, \"%Y-%m-%d\") as submitted,\n      COUNT(*) as count\n    FROM github_reviews\n      INNER JOIN scrum_members ON github_reviews.member_name = scrum_members.id\n    WHERE github_reviews.team = 1\n    GROUP BY scrum_members.member_name, DATE_FORMAT(submitted_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(submitted_at, \"%Y-%m-%d\")\n) as base",
+          "rawSql": "SELECT\n CAST(base.submitted as DATE) as time,\n base.member as metric,\n base.count\nFROM (\n    SELECT\n      scrum_members.member_name as member,\n      DATE_FORMAT(submitted_at, \"%Y-%m-%d\") as submitted,\n      COUNT(*) as count\n    FROM github_reviews\n      INNER JOIN scrum_members ON github_reviews.member_name = scrum_members.id\n    WHERE scrum_members.team = 1\n    GROUP BY scrum_members.member_name, DATE_FORMAT(submitted_at, \"%Y-%m-%d\")\n    ORDER BY DATE_FORMAT(submitted_at, \"%Y-%m-%d\")\n) as base",
           "refId": "A",
           "select": [
             [
@@ -704,7 +704,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_reviews\n  INNER JOIN scrum_members ON github_reviews.member_name = scrum_members.id\nWHERE\n  $__timeFilter(submitted_at) and github_reviews.team=1\nGROUP BY github_reviews.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  COUNT(*) As \"value\",\n  scrum_members.member_name as metric\nFROM github_reviews\n  INNER JOIN scrum_members ON github_reviews.member_name = scrum_members.id\nWHERE\n  $__timeFilter(submitted_at) and scrum_members.team=1\nGROUP BY github_reviews.member_name",
           "refId": "A",
           "select": [
             [
@@ -744,11 +744,11 @@
   },
   "time": {
     "from": "2020-12-12T08:00:00.000Z",
-    "to": "2020-12-16T08:00:00.000Z"
+    "to": "2020-12-19T07:59:59.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "github activity",
   "uid": "5_l5nO47z",
-  "version": 55
+  "version": 63
 }

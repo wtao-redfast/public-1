@@ -59,17 +59,16 @@ class RecordBase:
         return result[0]
 
 class RecordSourceCode(RecordBase):
-    def writeSourceCodeRecord(self, date, member, team, linesAdded, linesRemoved):
+    def writeSourceCodeRecord(self, date, member, linesAdded, linesRemoved):
         memberId = self.getScrumMemberId(member)
-        teamId = self.getScrumTeamId(team)
 
-        sql = f'SELECT * FROM git_daily_status WHERE the_date = "{date}" AND member_name = {memberId} AND team = {teamId}'
+        sql = f'SELECT * FROM git_daily_status WHERE the_date = "{date}" AND member_name = {memberId}'
         self.cursor.execute(sql)
         self.cursor.fetchone()
         if self.cursor.rowcount <= 0:
             sql = 'INSERT INTO git_daily_status ' +\
-                '(the_date, member_name, team, lines_added, lines_removed) ' +\
-                f'VALUES ("{date}", {memberId}, {teamId}, {linesAdded}, {linesRemoved})'
+                '(the_date, member_name, lines_added, lines_removed) ' +\
+                f'VALUES ("{date}", {memberId}, {linesAdded}, {linesRemoved})'
         else:
             sql = 'UPDATE git_daily_status ' +\
                 f'SET ' +\
@@ -86,13 +85,12 @@ class RecordSourceCode(RecordBase):
                 for member in range(len(teamMemberNames[team])):
                     linesAdded = random.randrange(200) + 1
                     linesRemoved = random.randrange(50) + 1
-                    self.writeSourceCodeRecord(date, teamMemberNames[team][member], teamNames[team], linesAdded, linesRemoved)
+                    self.writeSourceCodeRecord(date, teamMemberNames[team][member], linesAdded, linesRemoved)
             date += datetime.timedelta(days = 1)
 
 class RecordGithub(RecordBase):
-    def writePullRequestRecord(self, created_at, closed_at, pr_num, member, team, state):
+    def writePullRequestRecord(self, created_at, closed_at, pr_num, member, state):
         memberId = self.getScrumMemberId(member)
-        teamId = self.getScrumTeamId(team)
 
         sql = f'SELECT * FROM github_pull_requests WHERE pr_num = "{pr_num}"'
         self.cursor.execute(sql)
@@ -100,12 +98,12 @@ class RecordGithub(RecordBase):
         if self.cursor.rowcount <= 0:
             if state == 'open':
                 sql = 'INSERT INTO github_pull_requests ' +\
-                    '(created_at, closed_at, pr_num, member_name, team, state) ' +\
-                    f'VALUES ("{created_at}", NULL, {pr_num}, {memberId}, {teamId}, "{state}")'
+                    '(created_at, closed_at, pr_num, member_name, state) ' +\
+                    f'VALUES ("{created_at}", NULL, {pr_num}, {memberId}"{state}")'
             else:
                 sql = 'INSERT INTO github_pull_requests ' +\
-                    '(created_at, closed_at, pr_num, member_name, team, state) ' +\
-                    f'VALUES ("{created_at}", "{closed_at}", {pr_num}, {memberId}, {teamId}, "{state}")'
+                    '(created_at, closed_at, pr_num, member_name, state) ' +\
+                    f'VALUES ("{created_at}", "{closed_at}", {pr_num}, {memberId}, "{state}")'
         else:
             if state == 'open':
                 sql = 'UPDATE github_pull_requests ' +\
@@ -145,8 +143,8 @@ class RecordGithub(RecordBase):
                 memberId = random.randrange(len(teamMemberNames[teamId])) + 1
                 submitted_at += datetime.timedelta(minutes=1)
                 sql = 'INSERT INTO github_reviews ' +\
-                        '(pr_num, member_name, team, submitted_at) ' +\
-                        f'VALUES ({pr_num}, {memberId}, {teamId + 1}, "{submitted_at}")'
+                        '(pr_num, member_name, submitted_at) ' +\
+                        f'VALUES ({pr_num}, {memberId}, "{submitted_at}")'
                 self.cursor.execute(sql)
                 self.cnx.commit()
         return

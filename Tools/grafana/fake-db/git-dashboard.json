@@ -164,7 +164,7 @@
           "group": [],
           "metricColumn": "member_name",
           "rawQuery": true,
-          "rawSql": "SELECT\n  the_date AS \"time\",\n  scrum_members.member_name AS metric,\n  lines_added + lines_removed\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team = 1\nORDER BY the_date",
+          "rawSql": "SELECT\n  the_date AS \"time\",\n  scrum_members.member_name AS metric,\n  lines_added + lines_removed\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and scrum_members.team = 1\nORDER BY the_date",
           "refId": "A",
           "select": [
             [
@@ -313,7 +313,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  the_date AS \"time\",\n  sum(lines_added),\n  sum(lines_removed)\nFROM git_daily_status\nWHERE\n  team = 1 and $__timeFilter(the_date)\nGROUP BY the_date\nORDER BY the_date",
+          "rawSql": "SELECT\n  the_date AS \"time\",\n  sum(lines_added),\n  sum(lines_removed)\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  scrum_members.team = 1 and $__timeFilter(the_date)\nGROUP BY the_date\nORDER BY the_date",
           "refId": "A",
           "select": [
             [
@@ -433,7 +433,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_removed) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_removed) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and scrum_members.team=1\nGROUP BY git_daily_status.member_name",
           "refId": "A",
           "select": [
             [
@@ -523,7 +523,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_added) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and git_daily_status.team=1\nGROUP BY git_daily_status.member_name",
+          "rawSql": "SELECT\n  now() AS \"time\",\n  SUM(lines_added) As \"value\",\n  scrum_members.member_name as metric\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE\n  $__timeFilter(the_date) and scrum_members.team=1\nGROUP BY git_daily_status.member_name",
           "refId": "A",
           "select": [
             [
@@ -602,7 +602,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() as \"time\",\n  SUM(lines_added) as \"Total Lines Added\",\n  SUM(lines_removed) as \"Total Lines Removed\"\nFROM git_daily_status\nWHERE team=1 and $__timeFilter(the_date)\n",
+          "rawSql": "SELECT\n  NOW() as \"time\",\n  SUM(lines_added) as \"Total Lines Added\",\n  SUM(lines_removed) as \"Total Lines Removed\"\nFROM git_daily_status\n  INNER JOIN scrum_members ON git_daily_status.member_name = scrum_members.id\nWHERE scrum_members.team=1 and $__timeFilter(the_date)\n",
           "refId": "A",
           "select": [
             [
@@ -640,12 +640,12 @@
     "list": []
   },
   "time": {
-    "from": "2020-12-11T08:00:00.000Z",
-    "to": "2020-12-18T08:00:00.000Z"
+    "from": "2020-12-12T08:00:00.000Z",
+    "to": "2020-12-19T07:59:59.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "git code base",
   "uid": "wO2VZHVnz",
-  "version": 28
+  "version": 35
 }
